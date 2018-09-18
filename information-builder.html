@@ -72,22 +72,27 @@
     <script>
         $(function () {
             $('#send').click(function () {
-                send()
+                liff.sendMessages([{
+                    type: 'text',
+                    text: result
+                }]).then(function () {
+                    window.alert("Message sent");
+                }).catch(function (error) {
+                    window.alert("Error sending message: " + error);
+                });
+                console.log(text);
+                liff.closeWindow();
             });
 
             $('#build').click(function () {
-                build()
-            });
-
-            function build() {
-                var title = $('InputTitle').val();
+                var title = $('#InputTitle').val();
                 var category = $('#InputCategory').val();
                 var greeting = $('#InputGreet').val();
                 var date = $('#InputDate').val();
                 var requirement = $('#InputRequirement').val();
                 var place = $('#InputPlace').val();
                 var detail = $('#detailTextarea').val();
-                var text =
+                var result =
                     `
                 【${category}】${title}
 
@@ -102,20 +107,13 @@
                 【詳細】${detail}
                 `;
 
-                console.log(text);
-                $('#resultTextarea').val(text)
-            }
+                console.log(result);
+                $('#resultTextarea').val(result)
+            });
 
-            function send() {
-                liff.sendMessages([{
-                    type: 'text',
-                    text: text
-                }]).then(function () {
-                    window.alert("Message sent");
-                }).catch(function (error) {
-                    window.alert("Error sending message: " + error);
-                });
-            }
+
+
+
 
 
 
