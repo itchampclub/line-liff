@@ -21,13 +21,14 @@
                 </select>
             </div>
             <div class="form-group">
+                <label for="InputTitle">部会タイトル</label>
+                <input type="text" class="form-control" id="InputTitle" placeholder="3/9の部会">
+            </div>
+            <div class="form-group">
                 <label for="InputGreet">はじめの挨拶</label>
                 <textarea class="form-control" id="InputGreet" rows="3" placeholder="こんにちは！今年度初のテクチ講習会です！PCが好きな方、動画に興味のある方、代替えで動画作ろうと思っている方はぜひお越しください！"></textarea>
             </div>
-            <div class="form-group">
-                <label for="InputTitle">部会タイトル</label>
-                <textarea class="form-control" id="InputTitle" rows="3" placeholder="3/9の部会"></textarea>
-            </div>
+
             <div class="form-group">
                 <label for="InputDate">日時</label>
                 <input type="text" class="form-control" id="InputDate" aria-describedby="dateHelp" placeholder="3/9（月）18:30~20:30">
@@ -72,15 +73,16 @@
     <script>
         $(function () {
             $('#send').click(function () {
+                var sendText = $('#resultTextarea').val()
                 liff.sendMessages([{
                     type: 'text',
-                    text: result
+                    text: sendText
                 }]).then(function () {
                     window.alert("Message sent");
                 }).catch(function (error) {
                     window.alert("Error sending message: " + error);
                 });
-                console.log(text);
+                console.log(sendText);
                 liff.closeWindow();
             });
 
