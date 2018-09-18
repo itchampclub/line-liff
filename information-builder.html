@@ -1,0 +1,118 @@
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIFF Starter</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Information Builder</h1>
+        <form>
+            <div class="form-group">
+                <label for="InputCategory">部会の種類</label>
+                <select class="form-control" id="InputCategory">
+                    <option>ディス</option>
+                    <option>ディベ</option>
+                    <option>ドラマ</option>
+                    <option>ガイド</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="InputGreet">はじめの挨拶</label>
+                <textarea class="form-control" id="InputGreet" rows="3" placeholder=""></textarea>
+            </div>
+            <div class="form-group">
+                <label for="InputDate">日時</label>
+                <input type="text" class="form-control" id="InputDate" aria-describedby="dateHelp" placeholder="3/9（月）18:30~20:30">
+            </div>
+            <div class="form-group">
+                <label for="InputPlace">教室</label>
+                <input type="text" class="form-control" id="InputPlace" aria-describedby="placeHelp" placeholder="K204">
+            </div>
+            <div class="form-group">
+                <label for="InputRequirement">持ち物</label>
+                <input type="text" class="form-control" id="InputRequirement" placeholder="特になし">
+            </div>
+            <div class="form-group">
+                <label for="detailTextarea">内容説明・その他</label>
+                <textarea class="form-control" id="detailTextarea" rows="3" placeholder=""></textarea>
+            </div>
+
+
+        </form>
+
+        <button id="build" class="btn btn-primary">Convert</button>
+
+
+        <textarea class="form-control" id="resultTextarea" rows="5" placeholder="" readonly></textarea>
+
+
+
+        <button id="send" class="btn btn-primary">貼り付け</button>
+
+
+
+    </div>
+    <script src="https://d.line-scdn.net/liff/1.0/sdk.js"></script>
+    <script src="liff-starter.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <script>
+        $(function () {
+            $('#send').click(function () {
+                send()
+            });
+
+            $('#build').click(function () {
+                build()
+            });
+
+            function build() {
+                var category = $('#InputCategory').val();
+                var greeting = $('#InputGreet').val();
+                var date = $('#InputDate').val();
+                var requirement = $('#InputRequirement').val();
+                var place = $('#InputPlace').val();
+                var detail = $('#detailTextarea').val();
+                var text =
+                    `
+                【${category}】
+
+                ${greeting}
+
+                【日時】${date}
+
+                【持ち物】${requirement}
+
+                【場所】${place}
+
+                【詳細】${detail}
+
+                
+                `;
+                console.log(text);
+            }
+
+            function send() {
+                liff.sendMessages([{
+                    type: 'text',
+                    text: text
+                }]).then(function () {
+                    window.alert("Message sent");
+                }).catch(function (error) {
+                    window.alert("Error sending message: " + error);
+                });
+            }
+
+
+
+        });
+    </script>
+
+</body>
